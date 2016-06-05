@@ -1,0 +1,1 @@
+A node.js application for turning a Roomba, Arduino & a Laptop to a telepresence robot
