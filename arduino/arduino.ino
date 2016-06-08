@@ -18,6 +18,7 @@ void sendToRoomba(int val) {
 void setup() {
   initQueue();       
   Serial.begin(115200);
+  Serial.write("ready");
 }
 
 void loop() {
