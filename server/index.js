@@ -1,5 +1,6 @@
 "use strict";
 
+const WebSocketServer = require('ws').Server;
 const SerialPort = require('serialport').SerialPort;
 
 const portName = '/dev/cu.usbmodem1411';
@@ -7,12 +8,6 @@ const portName = '/dev/cu.usbmodem1411';
 let port = new SerialPort(portName, {
   baudRate: 115200
 });
-
-let start = '128;';
-let setupSong0 = '132;140;0;3;62;32;63;32;62;32;';
-let setupSong1 = '132;140;1;3;61;64;63;32;62;32;';
-let playSong0 = '141;0;';
-let playSong1 = '141;1;';
 
 port.on('open', portOpen);
 port.on('data', portData);
@@ -27,9 +22,7 @@ function portData(data) {
   console.log('data received: ' + data);
 
   if (data == 'ready') {
-    port.write(start + setupSong0 + setupSong1 + playSong0, function() {
-      console.log("done writing to port");
-    });
+    console.log('port is ready');
   }
 }
 
@@ -39,4 +32,31 @@ function portClose() {
 
 function portError(error) {
   console.log('port error:' + error);
+}
+
+let ws = new WebSocketServer({port: 3000});
+let connections = new Array;
+
+ws.on('connection', wsConnection);
+
+function wsConnection(client) {
+  console.log("new socket connection");
+
+  connections.push(client);
+
+  client.on('message', wsMessage);
+  client.on('close', wsClose);
+}
+
+function wsMessage(msg) {
+  console.log('socket message received: ' + msg);
+
+  port.write(msg);
+}
+
+function wsClose() {
+  console.log("socket connection closed");
+
+  let position = connections.indexOf(this);
+  connections.splice(position, 1); // delete connection from the array
 }
