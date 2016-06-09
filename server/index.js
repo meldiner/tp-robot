@@ -3,60 +3,44 @@
 const WebSocketServer = require('ws').Server;
 const SerialPort = require('serialport').SerialPort;
 
-const portName = '/dev/cu.usbmodem1411';
+const wsPort = process.env.WS_PORT;
+const serialPortPath = process.env.SERIAL_PORT_PATH;
 
-let port = new SerialPort(portName, {
-  baudRate: 115200
-});
+//const portName = '/dev/cu.usbmodem1411';
+//const portName = 'COM3';
 
-port.on('open', portOpen);
-port.on('data', portData);
-port.on('close', portClose);
-port.on('error', portError);
+let port = new SerialPort(serialPortPath, {baudRate: 115200});
+let ws = new WebSocketServer({port: wsPort});
+let connections = new Array;
 
-function portOpen() {
+port.on('open', () => {
   console.log('port open');
-}
-
-function portData(data) {
+});
+port.on('close', () => {
+  console.log('port close');
+});
+port.on('error', error => {
+  console.log('port error:' + error);
+});
+port.on('data', data => {
   console.log('data received: ' + data);
-
   if (data == 'ready') {
     console.log('port is ready');
   }
-}
+});
 
-function portClose() {
-  console.log('port close');
-}
-
-function portError(error) {
-  console.log('port error:' + error);
-}
-
-let ws = new WebSocketServer({port: 3000});
-let connections = new Array;
-
-ws.on('connection', wsConnection);
-
-function wsConnection(client) {
+ws.on('connection', client => {
   console.log("new socket connection");
-
   connections.push(client);
 
-  client.on('message', wsMessage);
-  client.on('close', wsClose);
-}
+  client.on('message', msg => {
+    console.log('socket message received: ' + msg);
+    port.write(msg);
+  });
 
-function wsMessage(msg) {
-  console.log('socket message received: ' + msg);
-
-  port.write(msg);
-}
-
-function wsClose() {
-  console.log("socket connection closed");
-
-  let position = connections.indexOf(this);
-  connections.splice(position, 1); // delete connection from the array
-}
+  client.on('close', () => {
+    console.log("socket connection closed");
+    let position = connections.indexOf(this);
+    connections.splice(position, 1); // delete connection from the array
+  });
+});
