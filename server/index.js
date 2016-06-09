@@ -6,9 +6,6 @@ const SerialPort = require('serialport').SerialPort;
 const wsPort = process.env.WS_PORT;
 const serialPortPath = process.env.SERIAL_PORT_PATH;
 
-//const portName = '/dev/cu.usbmodem1411';
-//const portName = 'COM3';
-
 let port = new SerialPort(serialPortPath, {baudRate: 115200});
 let ws = new WebSocketServer({port: wsPort});
 let connections = new Array;
