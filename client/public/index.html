@@ -1,20 +1,38 @@
 <html>
     <head>
-        <script>
-            var socket = new WebSocket("ws://localhost:3000");
-
-            var start = '128;';
-            var setupSong0 = '132;140;0;3;62;32;63;32;62;32;';
-            var setupSong1 = '132;140;1;3;61;64;63;32;62;32;';
-            var playSong0 = '141;0;';
-            var playSong1 = '141;1;';
-        </script>
+        <script src="roomba.js"></script>
+        <style>
+            #header {
+                padding:5px;
+            }
+            #sliders {
+                padding:5px;
+            }
+            #drive {
+                text-align: center;
+                float: left;
+                padding:5px;
+            }
+        </style>
     </head>
     <body>
-        <button onclick="socket.send(start);">start</button>
-        <button onclick="socket.send(setupSong0);">setup song 0</button>
-        <button onclick="socket.send(setupSong1);">setup song 1</button>
-        <button onclick="socket.send(playSong0);">play song 0</button>
-        <button onclick="socket.send(playSong1);">play song 1</button>
+        <div id="header">
+            <button id="start" onclick="takeControl()">Take Control</button>
+            <button id="seekDock" onclick="seekDock()">Seek Dock</button>
+        </div>
+        <div id="sliders">
+            Straight Velocity: <input type="range" id="straightVelocity" value="20" onchange="setStraightVelocity(this.value)">
+            <br/>
+            Turn Velocity: <input type="range" id="turnVelocity" value="10" onchange="setTurnVelocity(this.value)">
+        </div>
+        <div id="drive">
+            <button id="forward" onmousedown="forward()" onmouseup="stop()">Forward</button>
+            <br />
+            <button id="left" onmousedown="left()" onmouseup="stop()">Left</button>
+            <button id="stop" onmousedown="stop()">Stop</button>
+            <button id="right" onmousedown="right()" onmouseup="stop()">Right</button>
+            <br />
+            <button id="backward" onmousedown="backward()" onmouseup="stop()">Backward</button>
+        </div>
     </body>
 </html>
