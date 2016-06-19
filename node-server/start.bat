@@ -1,6 +1,4 @@
 SET WS_PORT=3000 
 SET SERIAL_PORT_PATH=COM3
 
-cd server
-
 npm start

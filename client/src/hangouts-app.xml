@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+	<ModulePrefs title="Hangout Starter">
+        <Require feature="rpc" />
+		<Require feature="views" />
+		<Require feature="locked-domain" />
+	</ModulePrefs>
+	<Content type="html">
+        <![CDATA[
+			<html>
+				<body>
+					<script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
+					<script src="//process.env.CLIENT_URL/bundle.js"></script>
+
+					<div id="header">
+                        <button onclick="roomba.takeControl()">Take Control</button>
+                        <button onclick="roomba.seekDock()">Seek Dock</button>
+                    </div>
+
+                    <div id="sliders">
+                        Straight Velocity: <input type="range" value="20" onchange="roomba.setStraightVelocity(this.value)">
+                        <br/>
+                        Turn Velocity: <input type="range" value="10" onchange="roomba.setTurnVelocity(this.value)">
+                    </div>
+
+                    <div id="drive">
+                        <button onmousedown="roomba.forward()" onmouseup="roomba.stop()">Forward</button>
+                        <br />
+                        <button onmousedown="roomba.left()" onmouseup="roomba.stop()">Left</button>
+                        <button onmousedown="roomba.stop()">Stop</button>
+                        <button onmousedown="roomba.right()" onmouseup="roomba.stop()">Right</button>
+                        <br />
+                        <button onmousedown="roomba.backward()" onmouseup="roomba.stop()">Backward</button>
+                    </div>
+				</body>
+			</html>
+		]]>
+	</Content>
+</Module>
+
