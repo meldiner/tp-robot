@@ -1,6 +1,8 @@
 "use strict";
 
-module.exports = (function() {
+module.exports = function(ws) {
+  var ws = ws;
+
   var decToHex = function(dec) {
     var highByte = dec >> 8;
     var lowByte = dec & 255;
@@ -17,11 +19,9 @@ module.exports = (function() {
   var straightVelocity = 100;
   var turnVelocity = 50;
 
-  var socket = new WebSocket(`wss://${process.env.SERVER_URL}`);
-
   var send = function(val) {
     var separator = ';';
-    socket.send(val.join(separator) + separator);
+    ws.send(val.join(separator) + separator);
   };
 
   var start = function() {
@@ -101,4 +101,4 @@ module.exports = (function() {
     right: right,
     backward: backward
   }
-})();
+};
