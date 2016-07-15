@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Telepresence Robot Server</string>
+    <string name="app_name">Telepresence Robot Android Service</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
