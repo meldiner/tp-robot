@@ -1,4 +1,4 @@
-package meldiner.telepresencerobotserver;
+package meldiner.tprobot;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends Activity {
-    public final String ACTION_USB_PERMISSION = "meldiner.telepresencerobotserver.USB_PERMISSION";
+    public final String ACTION_USB_PERMISSION = "meldiner.tprobot.USB_PERMISSION";
     Button startButton, sendButton, clearButton, stopButton;
     TextView textView;
     EditText editText;

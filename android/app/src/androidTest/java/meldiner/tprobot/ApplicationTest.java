@@ -1,4 +1,4 @@
-package meldiner.telepresencerobotserver;
+package meldiner.tprobot;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

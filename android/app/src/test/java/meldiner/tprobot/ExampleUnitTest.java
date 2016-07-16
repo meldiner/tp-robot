@@ -1,4 +1,4 @@
-package meldiner.telepresencerobotserver;
+package meldiner.tprobot;
 
 import org.junit.Test;
 
