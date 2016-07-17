@@ -13,14 +13,13 @@ import android.util.Log;
 import com.felhr.usbserial.UsbSerialDevice;
 import com.felhr.usbserial.UsbSerialInterface;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by meldinr on 7/15/16.
  */
-public class SerialPortWrapper {
+public class SerialPortWrapper implements IMessageCallback {
     public final String ACTION_USB_PERMISSION = "meldiner.tprobot.USB_PERMISSION";
     public final int BAUD_RATE = 115200;
 
@@ -115,7 +114,18 @@ public class SerialPortWrapper {
     }
 
     public void send(String data) {
-        serialPort.write(data.getBytes());
+        if (serialPort != null) {
+            try {
+                serialPort.write(data.getBytes());
+            } catch (Exception e) {
+                Log.d("SERIAL", "SEND FAILED: " + e.getStackTrace());
+
+                init();
+                serialPort.write(data.getBytes());
+            }
+        } else {
+            Log.d("SERIAL", "SERIAL PORT IS NULL");
+        }
     }
 
     public void close() {

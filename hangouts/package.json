@@ -23,7 +23,9 @@
     "url": "https://github.com/meldiner/tp-robot/issues"
   },
   "homepage": "https://github.com/meldiner/tp-robot/client#readme",
-  "dependencies": {},
+  "dependencies": {
+    "pubnub": "^3.15.2"
+  },
   "devDependencies": {
     "css-loader": "^0.23.1",
     "string-replace-webpack-plugin": "0.0.3",

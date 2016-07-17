@@ -1,7 +1,7 @@
 "use strict";
 
-module.exports = function(ws) {
-  var ws = ws;
+module.exports = function(sendFunc) {
+  var sendFunc = sendFunc;
 
   var decToHex = function(dec) {
     var highByte = dec >> 8;
@@ -21,7 +21,7 @@ module.exports = function(ws) {
 
   var send = function(val) {
     var separator = ';';
-    ws.send(val.join(separator) + separator);
+    sendFunc(val.join(separator) + separator);
   };
 
   var start = function() {

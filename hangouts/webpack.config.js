@@ -31,7 +31,8 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        SERVER_URL: JSON.stringify(process.env.SERVER_URL) || '"localhost:3000"'
+        PUBLISH_KEY: JSON.stringify(process.env.PUBLISH_KEY) || '',
+        SUBSCRIBE_KEY: JSON.stringify(process.env.SUBSCRIBE_KEY) || ''
       }
     }),
     new StringReplacePlugin()

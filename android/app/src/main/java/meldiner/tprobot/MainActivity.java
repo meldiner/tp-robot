@@ -13,7 +13,7 @@ public class MainActivity extends Activity {
     EditText editText;
 
     SerialPortWrapper serialPort = new SerialPortWrapper(this);
-
+    MessageStreamWrapper messageStream = new MessageStreamWrapper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,9 @@ public class MainActivity extends Activity {
         editText = (EditText) findViewById(R.id.editText);
         textView = (TextView) findViewById(R.id.textView);
         setUiEnabled(true);
+
         serialPort.init();
+        messageStream.setListener(serialPort);
     }
 
     public void setUiEnabled(boolean bool) {

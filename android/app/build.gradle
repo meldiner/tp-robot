@@ -10,6 +10,9 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        buildConfigField("String", "SUBSCRIBE_KEY", SUBSCRIBE_KEY)
+        buildConfigField("String", "PUBLISH_KEY", PUBLISH_KEY)
+        buildConfigField("String", "SECRET_KEY", SECRET_KEY)
     }
     buildTypes {
         release {
@@ -24,4 +27,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile files('libs/usbserial.jar')
+    compile group: 'com.pubnub', name: 'pubnub', version: '4.0.5'
 }
