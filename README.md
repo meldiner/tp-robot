@@ -1,1 +1,1 @@
-A node.js application for turning a Roomba, Arduino & a Laptop to a telepresence robot
+An Android service and web remote control for turning a Roomba, Arduino & an Android device to a telepresence robot
