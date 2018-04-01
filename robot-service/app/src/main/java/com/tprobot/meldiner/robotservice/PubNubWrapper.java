@@ -62,10 +62,8 @@ public class PubNubWrapper {
 
             if (handler != null
                 && message != null
-                && message.getMessage() != null
-                && message.getMessage().getAsJsonObject() != null
-                && message.getMessage().getAsJsonObject().get("data") != null) {
-                String msg = message.getMessage().getAsJsonObject().get("data").getAsString();
+                && message.getMessage() != null) {
+                String msg = message.getMessage().toString().replace("\"", "");
                 handler.handle(msg);
                 Log.i("MESSAGE", msg);
             }

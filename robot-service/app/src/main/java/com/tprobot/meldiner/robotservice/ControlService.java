@@ -13,9 +13,6 @@ import android.util.Log;
  */
 
 public class ControlService extends Service {
-    private final String PUBNUB_SUB_KEY = getString(R.string.pubnub_sub_key);
-    private final String PUBNUB_PUB_KEY = getString(R.string.pubnub_pub_key);
-
     private PubNubWrapper pubnub;
     private ArduinoWrapper arduino;
 
@@ -34,6 +31,9 @@ public class ControlService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
+
+        final String PUBNUB_SUB_KEY = getString(R.string.pubnub_sub_key);
+        final String PUBNUB_PUB_KEY = getString(R.string.pubnub_pub_key);
 
         arduino = new ArduinoWrapper(getApplicationContext());
         pubnub = new PubNubWrapper(PUBNUB_SUB_KEY, PUBNUB_PUB_KEY);

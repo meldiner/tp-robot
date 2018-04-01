@@ -93,7 +93,7 @@ public class ArduinoWrapper implements IMessageHandler{
         serialPort = UsbSerialDevice.createUsbSerialDevice(device, connection);
         if (serialPort != null) {
             if (serialPort.open()) { //Set Serial Connection Parameters.
-                serialPort.setBaudRate(9600);
+                serialPort.setBaudRate(115200);
                 serialPort.setDataBits(UsbSerialInterface.DATA_BITS_8);
                 serialPort.setStopBits(UsbSerialInterface.STOP_BITS_1);
                 serialPort.setParity(UsbSerialInterface.PARITY_NONE);

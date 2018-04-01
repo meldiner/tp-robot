@@ -21,6 +21,7 @@ class App extends Component {
     });
 
     this.roomba = new Roomba(message => {
+      console.log('message', message);
       this.pubnub.publish({
         channel: 'robotControl',
         message
