@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-import PubNub from 'pubnub';
+// import PubNub from 'pubnub';
 import Roomba from './Roomba';
 
 class App extends Component {
@@ -14,18 +13,27 @@ class App extends Component {
       turnVelocity: 10
     };
 
-    this.pubnub = new PubNub({
-      ssl: true,  // <- enable TLS Tunneling over TCP
-      subscribe_key: process.env.REACT_APP_SUBSCRIBE_KEY,
-      publish_key: process.env.REACT_APP_PUBLISH_KEY
-    });
+    // this.pubnub = new PubNub({
+    //   ssl: true,  // <- enable TLS Tunneling over TCP
+    //   subscribe_key: process.env.REACT_APP_SUBSCRIBE_KEY,
+    //   publish_key: process.env.REACT_APP_PUBLISH_KEY
+    // });
+
+    const ip = "192.168.29.127:38301";
+    this.ws = new WebSocket("ws://" + ip);
+    this.ws.onopen = function()
+    {
+         alert("web socket connected!");
+    };
+
 
     this.roomba = new Roomba(message => {
       console.log('message', message);
-      this.pubnub.publish({
-        channel: 'robotControl',
-        message
-      });
+      // this.pubnub.publish({
+      //   channel: 'robotControl',
+      //   message
+      // });
+      this.ws.send(message);
     });
   }
 
@@ -42,31 +50,29 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">TelePresence Robot Remote Control</h1>
-        </header>
-        <p className="App-intro">
-          Use the controls below to control your robot
-        </p>
-        <div>
-            <button onClick={this.roomba.takeControl}>Take Control</button>
-            <button onClick={this.roomba.seekDock}>Seek Dock</button>
+        <div className="Video">
+          <iframe src="https://appear.in/tp-ro" width="800" height="640" frameborder="0"></iframe>
         </div>
+        <div className="RemoteControl">
+          <div>
+              <button onClick={this.roomba.takeControl}>Take Control</button>
+              <button onClick={this.roomba.seekDock}>Seek Dock</button>
+          </div>
 
-        <div>
-            <p>Straight Velocity:</p><input type="range" value={this.state.straightVelocity} onChange={this.handleStraightVelocityChange}></input>
-            <p>Turn Velocity:</p><input type="range" value={this.state.turnVelocity} onChange={this.handleTurnVelocityChange}></input>
-        </div>
+          <div>
+              <p>Straight Velocity:</p><input type="range" value={this.state.straightVelocity} onChange={this.handleStraightVelocityChange}></input>
+              <p>Turn Velocity:</p><input type="range" value={this.state.turnVelocity} onChange={this.handleTurnVelocityChange}></input>
+          </div>
 
-        <div>
-            <button onMouseDown={this.roomba.forward} onMouseUp={this.roomba.stop}>Forward</button>
-            <br />
-            <button onMouseDown={this.roomba.left} onMouseUp={this.roomba.stop}>Left</button>
-            <button onMouseDown={this.roomba.stop}>Stop</button>
-            <button onMouseDown={this.roomba.right} onMouseUp={this.roomba.stop}>Right</button>
-            <br />
-            <button onMouseDown={this.roomba.backward} onMouseUp={this.roomba.stop}>Backward</button>
+          <div>
+              <button onMouseDown={this.roomba.forward} onMouseUp={this.roomba.stop}>Forward</button>
+              <br />
+              <button onMouseDown={this.roomba.left} onMouseUp={this.roomba.stop}>Left</button>
+              <button onMouseDown={this.roomba.stop}>Stop</button>
+              <button onMouseDown={this.roomba.right} onMouseUp={this.roomba.stop}>Right</button>
+              <br />
+              <button onMouseDown={this.roomba.backward} onMouseUp={this.roomba.stop}>Backward</button>
+          </div>
         </div>
       </div>
     );
